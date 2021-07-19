@@ -21,14 +21,12 @@ public class CustomerController {
     @GetMapping("/api/Customers") //Get all customers
     public ArrayList<Customer> getAllCustomers() {
         CustomerData customer = new CustomerData();
-        ArrayList<Customer> customers = customer.selectAllCustomers();
-        return customers;
+        return customer.selectAllCustomers();
     }
 
     @GetMapping("/api/Customers/{CustomerId}") //Get a specific customer
     public Customer getCustomer(@PathVariable int CustomerId)  {
         CustomerData customer = new CustomerData();
-        Customer specificCustomer = customer.selectSpecificCustomer(CustomerId);
-        return specificCustomer;
+        return customer.selectSpecificCustomer(CustomerId);
     }
 }
