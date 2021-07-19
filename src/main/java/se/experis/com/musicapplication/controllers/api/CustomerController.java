@@ -18,10 +18,17 @@ public class CustomerController {
         return "This is the root of our application";
     }
 
-    @GetMapping("/api/Customers") //Hur man når endpoint
+    @GetMapping("/api/Customers") //Get all customers
     public ArrayList<Customer> getAllCustomers() {
         CustomerData customer = new CustomerData();
         ArrayList<Customer> customers = customer.selectAllCustomers();
         return customers;
+    }
+
+    @GetMapping("/api/Customers/{CustomerId}") //Get a specific customer
+    public Customer getCustomer(@PathVariable int CustomerId)  {
+        CustomerData customer = new CustomerData();
+        Customer specificCustomer = customer.selectSpecificCustomer(CustomerId);
+        return specificCustomer;
     }
 }
