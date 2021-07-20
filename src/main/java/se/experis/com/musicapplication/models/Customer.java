@@ -1,7 +1,7 @@
 package se.experis.com.musicapplication.models;
 
 public class Customer {
-    private int id;
+    private int customerId;
     private String firstName;
     private String lastName;
     private String country;
@@ -9,8 +9,8 @@ public class Customer {
     private String phone;
     private String email;
 
-    public Customer(int id, String firstName, String lastName, String country, String postalCode, String phone, String email) {
-        this.id = id;
+    public Customer(int customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
@@ -19,12 +19,16 @@ public class Customer {
         this.email = email;
     }
 
-    public int getId() {
-        return id;
+    public Customer() {
+
     }
 
-    public void setId(int Id) {
-        this.id = Id;
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -59,12 +63,12 @@ public class Customer {
         this.postalCode = postalCode;
     }
 
-    public String getPhoneNumber() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phone = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
