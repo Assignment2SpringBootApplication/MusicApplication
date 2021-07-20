@@ -1,7 +1,5 @@
 package se.experis.com.musicapplication.controllers.api;
 
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.experis.com.musicapplication.data_access.DatabaseAccessHandler;
 import se.experis.com.musicapplication.models.Customer;
@@ -38,16 +36,15 @@ public class CustomerController {
         return customer.getAllCustomersWithLimitAndOffset(Limit, Offset);
     }
 
-    @PostMapping("/api/Customers/{Customer}") //Get all customers with Limit and Offset
-    public Boolean addNewCustomer(@PathVariable Customer Customer)  {
-        return customer.addNewCustomer(Customer);
+   @RequestMapping(value = "/api/Customers/addNewCustomer", method = RequestMethod.POST) //Create new customer
+    public Boolean createCustomer(@RequestBody Customer newCustomer) {
+        return customer.createNewCustomer(newCustomer);
     }
 
-    @RequestMapping(value = "/api/Customers/addNewCustomer/", method = RequestMethod.POST)
-    public String addCustomer(@ModelAttribute Customer Customer, BindingResult error, Model model){
-        Boolean success = customer.addNewCustomer(Customer);
-        model.addAttribute("success", success);
-        if(success){model.addAttribute("customer", new Customer());}
-        return "A new customer were successfully created";
+    @RequestMapping(value = "/api/Customers/updateCustomer", method = RequestMethod.PUT) //Create new customer
+    public Boolean updateCustomer(@RequestBody Customer updatedCustomer) {
+        return customer.updateCustomer(updatedCustomer);
     }
+
+
 }

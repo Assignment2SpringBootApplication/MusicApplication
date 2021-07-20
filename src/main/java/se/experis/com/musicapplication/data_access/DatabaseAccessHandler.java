@@ -189,7 +189,8 @@ public class DatabaseAccessHandler {
         }
     }
 
-    public Boolean addNewCustomer(Customer customer){
+    public Boolean createNewCustomer(Customer customer){
+        Boolean success = false;
         try {
             // Open Connection
             conn = DriverManager.getConnection(URL);
@@ -207,7 +208,11 @@ public class DatabaseAccessHandler {
             preparedStatement.setString(7, customer.getEmail());
 
             // Execute Statement
-            preparedStatement.executeQuery();
+            int result = preparedStatement.executeUpdate();
+            success = (result != 0); // if res = 1; true
+
+            System.out.println("Created a new customer successfully!");
+
         }
         catch (Exception ex){
             System.out.println("Something went wrong...");
@@ -222,13 +227,42 @@ public class DatabaseAccessHandler {
                 System.out.println("Something went wrong while closing connection.");
                 System.out.println(ex.toString());
             }
-            return true;
+            return success;
         }
     }
 
-    public Boolean updateExistingCustomer(Customer updatedCustomer){
-        return false;
+    public Boolean updateCustomer(Customer customer){
+        Boolean success = false;
+        try{
+            conn = DriverManager.getConnection(URL);
+            PreparedStatement prep =
+                    conn.prepareStatement("UPDATE customer SET  CustomerId=?, FirstName=?, LastName=?,Country=?, PostalCode=?, Phone=?,Email=? WHERE CustomerId=?");
+            prep.setInt(1,customer.getCustomerId());
+            prep.setString(2,customer.getFirstName());
+            prep.setString(3,customer.getLastName());
+            prep.setString(4,customer.getCountry());
+            prep.setString(5,customer.getPostalCode());
+            prep.setString(6,customer.getPhone());
+            prep.setString(7,customer.getEmail());
+            prep.setInt(8,customer.getCustomerId());
+
+            int result = prep.executeUpdate();
+            success = (result != 0); // if res = 1; true
+
+            System.out.println("Update went well!");
+        }catch(Exception exception){
+            System.out.println(exception.toString());
+        }
+        finally {
+            try{
+                conn.close();
+            } catch (Exception exception){
+                System.out.println(exception.toString());
+            }
+        }
+        return success;
     }
+
 
 }
 
