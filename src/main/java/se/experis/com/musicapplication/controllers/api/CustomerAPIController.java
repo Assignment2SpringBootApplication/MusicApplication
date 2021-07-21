@@ -4,12 +4,13 @@ import org.springframework.web.bind.annotation.*;
 import se.experis.com.musicapplication.data_access.DatabaseAccessHandler;
 import se.experis.com.musicapplication.models.Customer;
 import se.experis.com.musicapplication.models.CustomerCountry;
+import se.experis.com.musicapplication.models.CustomerGenre;
 import se.experis.com.musicapplication.models.CustomerSpender;
 
 import java.util.ArrayList;
 
 @RestController
-public class CustomerController {
+public class CustomerAPIController {
 
     DatabaseAccessHandler customer = new DatabaseAccessHandler();
 
@@ -58,5 +59,8 @@ public class CustomerController {
         return customer.customersHighestSpenders();
     }
 
-
+    @GetMapping("/api/Customers/mostPopularGenre/{CustomerId}") //Get a customers most popular genre
+    public ArrayList<CustomerGenre> getCustomerMostPopularGenre(@PathVariable int CustomerId)  {
+        return customer.customersMostPopularGenre(CustomerId);
+    }
 }

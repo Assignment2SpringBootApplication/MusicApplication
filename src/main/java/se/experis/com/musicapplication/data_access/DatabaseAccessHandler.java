@@ -2,6 +2,7 @@ package se.experis.com.musicapplication.data_access;
 
 import se.experis.com.musicapplication.models.Customer;
 import se.experis.com.musicapplication.models.CustomerCountry;
+import se.experis.com.musicapplication.models.CustomerGenre;
 import se.experis.com.musicapplication.models.CustomerSpender;
 
 import java.sql.Connection;
@@ -342,6 +343,56 @@ public class DatabaseAccessHandler {
                 System.out.println(ex.toString());
             }
             return customerSpender;
+        }
+    }
+
+    public ArrayList<CustomerGenre> customersMostPopularGenre(int customerId){
+        ArrayList<CustomerGenre> customerGenre = new ArrayList<CustomerGenre>();
+        try {
+            // Open Connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+
+            // Prepare Statement
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("WITH Top AS \n" +
+                            "( \n" +
+                            " SELECT Genre.Name as Genre, COUNT(Track.GenreId) AS Occurrences \n" +
+                            "   \tFROM Customer\n" +
+                            "      INNER JOIN Invoice ON Invoice.CustomerId = Customer.CustomerId\n" +
+                            "      INNER JOIN InvoiceLine ON InvoiceLine.InvoiceId = Invoice.InvoiceId\n" +
+                            "      INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId\n" +
+                            "      Inner JOIN Genre ON Track.GenreId = Genre.GenreId\n" +
+                            "WHERE Customer.CustomerId = ? GROUP BY Track.GenreId\n" +
+                            ") \n" +
+                            "SELECT * FROM Top WHERE Occurrences = (SELECT MAX(Occurrences) FROM Top)");
+            preparedStatement.setInt(1, customerId);
+            // Execute Statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process Results
+            while (resultSet.next()) {
+                customerGenre.add(
+                        new CustomerGenre(
+                                resultSet.getString("Genre"),
+                                resultSet.getInt("Occurrences")
+                        ));
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Something went wrong...");
+            System.out.println(ex.toString());
+        }
+        finally {
+            try {
+                // Close Connection
+                conn.close();
+            }
+            catch (Exception ex){
+                System.out.println("Something went wrong while closing connection.");
+                System.out.println(ex.toString());
+            }
+            return customerGenre;
         }
     }
 
