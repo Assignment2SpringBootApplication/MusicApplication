@@ -3,6 +3,8 @@ package se.experis.com.musicapplication.controllers.api;
 import org.springframework.web.bind.annotation.*;
 import se.experis.com.musicapplication.data_access.DatabaseAccessHandler;
 import se.experis.com.musicapplication.models.Customer;
+import se.experis.com.musicapplication.models.CustomerCountry;
+import se.experis.com.musicapplication.models.CustomerSpender;
 
 import java.util.ArrayList;
 
@@ -41,9 +43,19 @@ public class CustomerController {
         return customer.createNewCustomer(newCustomer);
     }
 
-    @RequestMapping(value = "/api/Customers/updateCustomer", method = RequestMethod.PUT) //Create new customer
+    @RequestMapping(value = "/api/Customers/updateCustomer", method = RequestMethod.PUT) //Update a customer
     public Boolean updateCustomer(@RequestBody Customer updatedCustomer) {
         return customer.updateCustomer(updatedCustomer);
+    }
+
+    @GetMapping("/api/Customers/customersPerCountry") //Get amount of customers per country
+    public ArrayList<CustomerCountry> getCustomerAmountPerCountry()  {
+        return customer.numberOFCustomersInEachCountry();
+    }
+
+    @GetMapping("/api/Customers/highestSpenders") //Get highest spenders
+    public ArrayList<CustomerSpender> getHighestSpenders()  {
+        return customer.customersHighestSpenders();
     }
 
 

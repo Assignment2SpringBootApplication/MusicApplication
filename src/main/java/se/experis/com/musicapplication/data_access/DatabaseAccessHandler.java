@@ -1,6 +1,8 @@
 package se.experis.com.musicapplication.data_access;
 
 import se.experis.com.musicapplication.models.Customer;
+import se.experis.com.musicapplication.models.CustomerCountry;
+import se.experis.com.musicapplication.models.CustomerSpender;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,13 +32,13 @@ public class DatabaseAccessHandler {
             while (resultSet.next()) {
                 customers.add(
                         new Customer(
-                                resultSet.getInt("CustomerId"),
-                                resultSet.getString("FirstName"),
-                                resultSet.getString("LastName"),
-                                resultSet.getString("Country"),
-                                resultSet.getString("PostalCode"),
-                                resultSet.getString("Phone"),
-                                resultSet.getString("Email")
+                                resultSet.getInt("customerId"),
+                                resultSet.getString("firstName"),
+                                resultSet.getString("lastName"),
+                                resultSet.getString("country"),
+                                resultSet.getString("postalCode"),
+                                resultSet.getString("phone"),
+                                resultSet.getString("email")
                         ));
             }
         }
@@ -65,20 +67,20 @@ public class DatabaseAccessHandler {
             System.out.println("Connection to SQLite has been established.");
             // Prepare Statement
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT CustomerId,FirstName,LastName,Country,PostalCode,Phone,Email FROM customer WHERE CustomerId = ?");
+                    conn.prepareStatement("SELECT CustomerId,FirstName,LastName,Country,PostalCode,Phone,Email FROM Customer WHERE CustomerId = ?");
             preparedStatement.setInt(1, customerId); // Corresponds to 1st '?' (must match type)
             // Execute Statement
             ResultSet resultSet = preparedStatement.executeQuery();
             // Process Results
             while (resultSet.next()) {
                 customer = new Customer(
-                        resultSet.getInt("CustomerId"),
-                        resultSet.getString("FirstName"),
-                        resultSet.getString("LastName"),
-                        resultSet.getString("Country"),
-                        resultSet.getString("PostalCode"),
-                        resultSet.getString("Phone"),
-                        resultSet.getString("Email")
+                        resultSet.getInt("customerId"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("country"),
+                        resultSet.getString("postalCode"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("email")
                 );
             }
         } catch (Exception ex) {
@@ -105,21 +107,21 @@ public class DatabaseAccessHandler {
 
             // Prepare Statement
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("SELECT CustomerId,FirstName,LastName,Country,PostalCode,Phone,Email FROM customer WHERE FirstName = ?");
-            preparedStatement.setString(1, firstName); // Corresponds to 1st '?' (must match type)
+                    conn.prepareStatement("SELECT CustomerId,FirstName,LastName,Country,PostalCode,Phone,Email FROM Customer WHERE FirstName LIKE ?");
+            preparedStatement.setString(1, "%"+firstName+"%"); // Corresponds to 1st '?' (must match type)
             // Execute Statement
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Process Results
             while (resultSet.next()) {
                 customer = new Customer(
-                        resultSet.getInt("CustomerId"),
-                        resultSet.getString("FirstName"),
-                        resultSet.getString("LastName"),
-                        resultSet.getString("Country"),
-                        resultSet.getString("PostalCode"),
-                        resultSet.getString("Phone"),
-                        resultSet.getString("Email")
+                        resultSet.getInt("customerId"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("country"),
+                        resultSet.getString("postalCode"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("email")
                 );
             }
 
@@ -160,13 +162,13 @@ public class DatabaseAccessHandler {
             while (resultSet.next()) {
                 customers.add(
                         new Customer(
-                                resultSet.getInt("CustomerId"),
-                                resultSet.getString("FirstName"),
-                                resultSet.getString("LastName"),
-                                resultSet.getString("Country"),
-                                resultSet.getString("PostalCode"),
-                                resultSet.getString("Phone"),
-                                resultSet.getString("Email")
+                                resultSet.getInt("customerId"),
+                                resultSet.getString("firstName"),
+                                resultSet.getString("lastName"),
+                                resultSet.getString("country"),
+                                resultSet.getString("postalCode"),
+                                resultSet.getString("phone"),
+                                resultSet.getString("email")
                         ));
             }
         }
@@ -198,7 +200,7 @@ public class DatabaseAccessHandler {
 
             // Prepare Statement
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("INSERT INTO customer(CustomerId,FirstName,LastName,Country,PostalCode,Phone,Email) VALUES (?,?,?,?,?,?,?)");
+                    conn.prepareStatement("INSERT INTO Customer(CustomerId,FirstName,LastName,Country,PostalCode,Phone,Email) VALUES (?,?,?,?,?,?,?)");
             preparedStatement.setInt(1, customer.getCustomerId());
             preparedStatement.setString(2, customer.getFirstName());
             preparedStatement.setString(3, customer.getLastName());
@@ -236,7 +238,7 @@ public class DatabaseAccessHandler {
         try{
             conn = DriverManager.getConnection(URL);
             PreparedStatement prep =
-                    conn.prepareStatement("UPDATE customer SET  CustomerId=?, FirstName=?, LastName=?,Country=?, PostalCode=?, Phone=?,Email=? WHERE CustomerId=?");
+                    conn.prepareStatement("UPDATE Customer SET  CustomerId=?, FirstName=?, LastName=?,Country=?, PostalCode=?, Phone=?,Email=? WHERE CustomerId=?");
             prep.setInt(1,customer.getCustomerId());
             prep.setString(2,customer.getFirstName());
             prep.setString(3,customer.getLastName());
@@ -263,6 +265,85 @@ public class DatabaseAccessHandler {
         return success;
     }
 
+    public ArrayList<CustomerCountry> numberOFCustomersInEachCountry(){
+        ArrayList<CustomerCountry> customersPerCountry = new ArrayList<CustomerCountry>();
+        try {
+            // Open Connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+
+            // Prepare Statement
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT Customer.Country AS Country, COUNT(*) AS Quantity FROM Customer GROUP BY Customer.Country ORDER BY COUNT(*) DESC");
+            // Execute Statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process Results
+            while (resultSet.next()) {
+                customersPerCountry.add(
+                        new CustomerCountry(
+                                resultSet.getString("country"),
+                                resultSet.getInt("quantity")
+                        ));
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Something went wrong...");
+            System.out.println(ex.toString());
+        }
+        finally {
+            try {
+                // Close Connection
+                conn.close();
+            }
+            catch (Exception ex){
+                System.out.println("Something went wrong while closing connection.");
+                System.out.println(ex.toString());
+            }
+            return customersPerCountry;
+        }
+    }
+
+    public ArrayList<CustomerSpender> customersHighestSpenders(){
+        ArrayList<CustomerSpender> customerSpender = new ArrayList<CustomerSpender>();
+        try {
+            // Open Connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+
+            // Prepare Statement
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT Customer.FirstName, Customer.LastName, SUM(Total) AS TotalAmount FROM Invoice\n" +
+                            "INNER JOIN Customer customer ON Invoice.CustomerId = Customer.CustomerId GROUP BY Invoice.CustomerId ORDER BY TotalAmount DESC");
+            // Execute Statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process Results
+            while (resultSet.next()) {
+                customerSpender.add(
+                        new CustomerSpender(
+                                resultSet.getString("firstName"),
+                                resultSet.getString("lastName"),
+                                resultSet.getInt("totalAmount")
+                        ));
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Something went wrong...");
+            System.out.println(ex.toString());
+        }
+        finally {
+            try {
+                // Close Connection
+                conn.close();
+            }
+            catch (Exception ex){
+                System.out.println("Something went wrong while closing connection.");
+                System.out.println(ex.toString());
+            }
+            return customerSpender;
+        }
+    }
 
 }
 
