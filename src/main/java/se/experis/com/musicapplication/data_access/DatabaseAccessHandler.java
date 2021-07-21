@@ -355,16 +355,16 @@ public class DatabaseAccessHandler {
 
             // Prepare Statement
             PreparedStatement preparedStatement =
-                    conn.prepareStatement("WITH Top AS \n" +
-                            "( \n" +
-                            " SELECT Genre.Name as Genre, COUNT(Track.GenreId) AS Occurrences \n" +
-                            "   \tFROM Customer\n" +
-                            "      INNER JOIN Invoice ON Invoice.CustomerId = Customer.CustomerId\n" +
-                            "      INNER JOIN InvoiceLine ON InvoiceLine.InvoiceId = Invoice.InvoiceId\n" +
-                            "      INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId\n" +
-                            "      Inner JOIN Genre ON Track.GenreId = Genre.GenreId\n" +
-                            "WHERE Customer.CustomerId = ? GROUP BY Track.GenreId\n" +
-                            ") \n" +
+                    conn.prepareStatement("WITH Top AS" +
+                            "(" +
+                            " SELECT Genre.Name as Genre, COUNT(Track.GenreId) AS Occurrences" +
+                            "      FROM Customer" +
+                            "      INNER JOIN Invoice ON Invoice.CustomerId = Customer.CustomerId" +
+                            "      INNER JOIN InvoiceLine ON InvoiceLine.InvoiceId = Invoice.InvoiceId" +
+                            "      INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
+                            "      Inner JOIN Genre ON Track.GenreId = Genre.GenreId" +
+                            "WHERE Customer.CustomerId = ? GROUP BY Track.GenreId" +
+                            ")" +
                             "SELECT * FROM Top WHERE Occurrences = (SELECT MAX(Occurrences) FROM Top)");
             preparedStatement.setInt(1, customerId);
             // Execute Statement
