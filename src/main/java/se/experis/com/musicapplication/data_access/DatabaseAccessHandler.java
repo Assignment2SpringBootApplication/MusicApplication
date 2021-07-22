@@ -1,9 +1,6 @@
 package se.experis.com.musicapplication.data_access;
 
-import se.experis.com.musicapplication.models.Customer;
-import se.experis.com.musicapplication.models.CustomerCountry;
-import se.experis.com.musicapplication.models.CustomerGenre;
-import se.experis.com.musicapplication.models.CustomerSpender;
+import se.experis.com.musicapplication.models.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -357,13 +354,13 @@ public class DatabaseAccessHandler {
             PreparedStatement preparedStatement =
                     conn.prepareStatement("WITH Top AS" +
                             "(" +
-                            " SELECT Genre.Name as Genre, COUNT(Track.GenreId) AS Occurrences" +
+                            " SELECT Genre.Name AS Genre, COUNT(Track.GenreId) AS Occurrences" +
                             "      FROM Customer" +
                             "      INNER JOIN Invoice ON Invoice.CustomerId = Customer.CustomerId" +
                             "      INNER JOIN InvoiceLine ON InvoiceLine.InvoiceId = Invoice.InvoiceId" +
                             "      INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
                             "      Inner JOIN Genre ON Track.GenreId = Genre.GenreId" +
-                            "WHERE Customer.CustomerId = ? GROUP BY Track.GenreId" +
+                            "      WHERE Customer.CustomerId = ? GROUP BY Track.GenreId" +
                             ")" +
                             "SELECT * FROM Top WHERE Occurrences = (SELECT MAX(Occurrences) FROM Top)");
             preparedStatement.setInt(1, customerId);
@@ -396,5 +393,121 @@ public class DatabaseAccessHandler {
         }
     }
 
+    public ArrayList<Artist> randomArtists(){
+        ArrayList<Artist> artists = new ArrayList<Artist>();
+        try {
+            // Open Connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+
+            // Prepare Statement
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT ArtistId, Name FROM Artist ORDER BY random() LIMIT 5");
+            // Execute Statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process Results
+            while (resultSet.next()) {
+                artists.add(
+                        new Artist(
+                                resultSet.getInt("artistId"),
+                                resultSet.getString("name")
+                        ));
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Something went wrong...");
+            System.out.println(ex.toString());
+        }
+        finally {
+            try {
+                // Close Connection
+                conn.close();
+            }
+            catch (Exception ex){
+                System.out.println("Something went wrong while closing connection.");
+                System.out.println(ex.toString());
+            }
+            return artists;
+        }
+    }
+
+    public ArrayList<Track> randomTracks(){
+        ArrayList<Track> tracks = new ArrayList<Track>();
+        try {
+            // Open Connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+
+            // Prepare Statement
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT TrackId, Name FROM Track ORDER BY random() LIMIT 5");
+            // Execute Statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process Results
+            while (resultSet.next()) {
+                tracks.add(
+                        new Track(
+                                resultSet.getInt("trackId"),
+                                resultSet.getString("name")
+                        ));
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Something went wrong...");
+            System.out.println(ex.toString());
+        }
+        finally {
+            try {
+                // Close Connection
+                conn.close();
+            }
+            catch (Exception ex){
+                System.out.println("Something went wrong while closing connection.");
+                System.out.println(ex.toString());
+            }
+            return tracks;
+        }
+    }
+
+    public ArrayList<Genre> randomGenres(){
+        ArrayList<Genre> genres = new ArrayList<Genre>();
+        try {
+            // Open Connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+
+            // Prepare Statement
+            PreparedStatement preparedStatement =
+                    conn.prepareStatement("SELECT GenreId, Name FROM Genre ORDER BY random() LIMIT 5");
+            // Execute Statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process Results
+            while (resultSet.next()) {
+                genres.add(
+                        new Genre(
+                                resultSet.getInt("genreId"),
+                                resultSet.getString("name")
+                        ));
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Something went wrong...");
+            System.out.println(ex.toString());
+        }
+        finally {
+            try {
+                // Close Connection
+                conn.close();
+            }
+            catch (Exception ex){
+                System.out.println("Something went wrong while closing connection.");
+                System.out.println(ex.toString());
+            }
+            return genres;
+        }
+    }
 }
 

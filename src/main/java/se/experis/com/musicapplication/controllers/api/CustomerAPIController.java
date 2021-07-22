@@ -2,10 +2,7 @@ package se.experis.com.musicapplication.controllers.api;
 
 import org.springframework.web.bind.annotation.*;
 import se.experis.com.musicapplication.data_access.DatabaseAccessHandler;
-import se.experis.com.musicapplication.models.Customer;
-import se.experis.com.musicapplication.models.CustomerCountry;
-import se.experis.com.musicapplication.models.CustomerGenre;
-import se.experis.com.musicapplication.models.CustomerSpender;
+import se.experis.com.musicapplication.models.*;
 
 import java.util.ArrayList;
 
@@ -14,7 +11,7 @@ public class CustomerAPIController {
 
     DatabaseAccessHandler customer = new DatabaseAccessHandler();
 
-    @GetMapping("/") //Hur man når endpoint
+    @GetMapping("/api/") //Hur man når endpoint
     public String index() {
         return "This is the root of our application";
     }
@@ -62,5 +59,20 @@ public class CustomerAPIController {
     @GetMapping("/api/Customers/mostPopularGenre/{CustomerId}") //Get a customers most popular genre
     public ArrayList<CustomerGenre> getCustomerMostPopularGenre(@PathVariable int CustomerId)  {
         return customer.customersMostPopularGenre(CustomerId);
+    }
+
+    @GetMapping("/api/Customers/randomArtists") //Get 5 random artists
+    public ArrayList<Artist> getRandomArtists()  {
+        return customer.randomArtists();
+    }
+
+    @GetMapping("/api/Customers/randomTracks") //Get 5 random tracks
+    public ArrayList<Track> getRandomTracks()  {
+        return customer.randomTracks();
+    }
+
+    @GetMapping("/api/Customers/randomGenres") //Get 5 random genre
+    public ArrayList<Genre> getRandomGenres()  {
+        return customer.randomGenres();
     }
 }

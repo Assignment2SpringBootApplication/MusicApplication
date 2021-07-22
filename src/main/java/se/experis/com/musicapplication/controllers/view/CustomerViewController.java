@@ -9,16 +9,19 @@ import se.experis.com.musicapplication.data_access.DatabaseAccessHandler;
 
 @Controller
 public class CustomerViewController {
-    DatabaseAccessHandler customer = new DatabaseAccessHandler();
+    DatabaseAccessHandler databaseAccessHandler = new DatabaseAccessHandler();
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(){
-        return "index";
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String home(Model model){
+        model.addAttribute("artists", databaseAccessHandler.randomArtists());
+        model.addAttribute("tracks", databaseAccessHandler.randomTracks());
+        model.addAttribute("genres", databaseAccessHandler.randomGenres());
+        return "home";
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public String getAllCustomers(Model model){
-        model.addAttribute("customers", customer.getAllCustomers());
+        model.addAttribute("customers", databaseAccessHandler.getAllCustomers());
         return "view-customers";
     }
 

@@ -1,20 +1,20 @@
 package se.experis.com.musicapplication.models;
 
-public class Track {
-    private int trackId;
+public class Genre {
+    private int genreId;
     private String name;
 
-    public Track(int trackId, String name) {
-        this.trackId = trackId;
+    public Genre(int genreId, String name) {
+        this.genreId = genreId;
         this.name = name;
     }
 
-    public int getTrackId() {
-        return trackId;
+    public int getGenreId() {
+        return genreId;
     }
 
-    public void setTrackId(int trackId) {
-        this.trackId = trackId;
+    public void setGenreId(int genreId) {
+        this.genreId = genreId;
     }
 
     public String getName() {
