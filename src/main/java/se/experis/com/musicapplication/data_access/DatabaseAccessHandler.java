@@ -510,7 +510,7 @@ public class DatabaseAccessHandler {
         }
     }
 
-    public ArrayList<SearchTrack> searchForTrack(String name){
+    public ArrayList<SearchTrack> searchForTrack(String searchString){
         ArrayList<SearchTrack> tracks = new ArrayList<>();
         try {
             // Open Connection
@@ -522,9 +522,9 @@ public class DatabaseAccessHandler {
                     conn.prepareStatement("SELECT Track.Name AS TrackName, Artist.Name AS ArtistName, Album.Title AS AlbumTitle, Genre.Name AS GenreName FROM Track " +
                             "INNER JOIN Album ON Track.AlbumId = Album.AlbumId \n" +
                             "INNER JOIN Artist ON Album.ArtistId = Artist.Artistid \n" +
-                            "INNER JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Track.Name LIKE ?");
-            preparedStatement.setString(1, "%"+name+"%");
-            // Execute Statement
+                            "INNER JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Track.Name LIKE ? OR Artist.Name LIKE ? OR Album.Title LIKE ? OR Genre.Name LIKE ?");
+            preparedStatement.setString(1, "%"+searchString+"%");
+            preparedStatement.setString(2, "%"+searchString+"%");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Process Results

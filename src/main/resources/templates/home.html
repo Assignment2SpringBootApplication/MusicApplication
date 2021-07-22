@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/"><img style="width: 35px" th:src="@{/img/thymeleaf.png}" alt=""></a>
+    <a class="navbar-brand" href="/home"><img id="image" style="width: 60px; " th:src="@{/img/guitar.png}" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,65 +17,58 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/customers">View <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home">Home</a>
             </li>
         </ul>
     </div>
 </nav>
 
-<!--<table class="table table-striped" style="margin-top: 100px">
-    <thead class="thead">
-       <th><h3 class="display-6">Random artists</h3></th>
-    </thead>
-    <tbody>
-    <tr th:each="art:${artists}">
-        <td th:text="${art.getName()}"></td>
-    </tr>
-    </tbody>
-</table>
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-    <th><h3 class="display-6">Random tracks</h3></th>
-    </thead>
-    <tbody>
-    <tr th:each="tra:${tracks}">
-        <td th:text="${tra.getName()}"></td>
-    </tr>
-    </tbody>
-</table>
+<form th:action="@{/viewTrack}" method="get" style="margin-top: 150px">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search here..." id="inputName" th:name="trackName"/>
+    </div>
+    <button type="submit" class="btn btn-success" style="background-color: #EC9129; position: relative; left: 0; right: 0; margin-left: 40%; border-color: black">Search</button>
+</form>
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-    <th><h3 class="display-6">Random genres</h3></th>
-    </thead>
-    <tbody>
-    <tr th:each="gen:${genres}">
-        <td th:text="${gen.getName()}"></td>
-    </tr>
-    </tbody>
-</table>-->
 
-<div style="margin-top: 100px">
-    <form th:action="@{/viewTrack}" method="get">
-        <div class="form-group">
-            <label for="inputName">Search</label>
-            <input type="text" class="form-control" id="inputName" th:name="trackName"/>
-        </div>
-        <button type="submit" class="btn btn-success">Search</button>
-    </form>
+<div class="wrapper">
+    <div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <th><h3 class="display-6">Random artists</h3></th>
+            </thead>
+            <tbody>
+            <tr th:each="art:${artists}">
+                <td th:text="${art.getName()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <th><h3 class="display-6">Random tracks</h3></th>
+            </thead>
+            <tbody>
+            <tr th:each="tra:${tracks}">
+                <td th:text="${tra.getName()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <th><h3 class="display-6">Random genres</h3></th>
+            </thead>
+            <tbody>
+            <tr th:each="gen:${genres}">
+                <td th:text="${gen.getName()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-
-
-
-
-
-
-
-
 </body>
 </html>
