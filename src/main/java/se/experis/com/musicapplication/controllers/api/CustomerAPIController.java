@@ -61,18 +61,4 @@ public class CustomerAPIController {
         return customer.customersMostPopularGenre(CustomerId);
     }
 
-    @GetMapping("/api/Customers/randomArtists") //Get 5 random artists
-    public ArrayList<Artist> getRandomArtists()  {
-        return customer.randomArtists();
-    }
-
-    @GetMapping("/api/Customers/randomTracks") //Get 5 random tracks
-    public ArrayList<Track> getRandomTracks()  {
-        return customer.randomTracks();
-    }
-
-    @GetMapping("/api/Customers/randomGenres") //Get 5 random genre
-    public ArrayList<Genre> getRandomGenres()  {
-        return customer.randomGenres();
-    }
 }

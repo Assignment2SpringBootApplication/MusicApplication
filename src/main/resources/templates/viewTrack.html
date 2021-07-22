@@ -22,29 +22,25 @@
             <li class="nav-item">
                 <a class="nav-link" href="/customers">View <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/add-customers">Add</a>
-            </li>
         </ul>
     </div>
 </nav>
 
-<div class="container inner-padded">
-    <div class="row justify-content-center align-items-center" style="padding-bottom: 2em;">
-        <h1 class="display-3">Existing customers</h1>
+<div th:text="${resultFor}"></div>
 
-    </div>
-    <div class="row">
-        <div class="col-sm-4" th:each="cust:${customers}">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${cust.getFirstName()}"></h5>
-                    <a class="btn btn-success" th:href="'/customers/' + ${cust.getCustomerId()}">View</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <th><h3 class="display-6">Track</h3></th>
+    </thead>
+    <tbody>
+    <tr th:each="tra:${track}">
+        <td th:text="${tra.getName()}"></td>
+        <td th:text="${tra.getArtistName()}"></td>
+        <td th:text="${tra.getAlbumTitle()}"></td>
+        <td th:text="${tra.getGenreName()}"></td>
+    </tr>
+    </tbody>
+</table>-->
 
 </body>
 </html>

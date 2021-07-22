@@ -9,3 +9,11 @@
     border-color: #28a745;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
+
+.navbar navbar-expand-md navbar-dark fixed-top {
+    background-color: #2a4d69;
+}
+
+.thead {
+    background-color: #5585a9;
+}

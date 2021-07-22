@@ -26,53 +26,56 @@
     </div>
 </nav>
 
-<div class="container inner-padded">
-    <div class="row justify-content-center align-items-center" style="padding-bottom: 2em;">
-        <h1 class="display-3">Random artists</h1>
+<!--<table class="table table-striped" style="margin-top: 100px">
+    <thead class="thead">
+       <th><h3 class="display-6">Random artists</h3></th>
+    </thead>
+    <tbody>
+    <tr th:each="art:${artists}">
+        <td th:text="${art.getName()}"></td>
+    </tr>
+    </tbody>
+</table>
 
-    </div>
-    <div class="row">
-        <div class="col-sm-4" th:each="art:${artists}">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${art.getName()}"></h5>
-                </div>
-            </div>
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <th><h3 class="display-6">Random tracks</h3></th>
+    </thead>
+    <tbody>
+    <tr th:each="tra:${tracks}">
+        <td th:text="${tra.getName()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <th><h3 class="display-6">Random genres</h3></th>
+    </thead>
+    <tbody>
+    <tr th:each="gen:${genres}">
+        <td th:text="${gen.getName()}"></td>
+    </tr>
+    </tbody>
+</table>-->
+
+<div style="margin-top: 100px">
+    <form th:action="@{/viewTrack}" method="get">
+        <div class="form-group">
+            <label for="inputName">Search</label>
+            <input type="text" class="form-control" id="inputName" th:name="trackName"/>
         </div>
-    </div>
+        <button type="submit" class="btn btn-success">Search</button>
+    </form>
 </div>
 
-<div class="container inner-padded">
-    <div class="row justify-content-center align-items-center" style="padding-bottom: 2em;">
-        <h1 class="display-3">Random tracks</h1>
 
-    </div>
-    <div class="row">
-        <div class="col-sm-4" th:each="tra:${tracks}">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${tra.getName()}"></h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="container inner-padded">
-    <div class="row justify-content-center align-items-center" style="padding-bottom: 2em;">
-        <h1 class="display-3">Random genres</h1>
 
-    </div>
-    <div class="row">
-        <div class="col-sm-4" th:each="gen:${genres}">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${gen.getName()}"></h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
 
 </body>
 </html>
