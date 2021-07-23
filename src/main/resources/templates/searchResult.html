@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<table class="table table-striped" style="margin-left: auto; margin-right: auto; margin-top: 50px; width:75%">
+<table class="table table-striped" style="margin-left: auto; margin-right: auto; margin-top: 50px; width:75%; margin-bottom: 50px">
     <thead class="thead-dark">
     <tr>
         <th>Track</th>
@@ -39,11 +39,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="tra:${track}">
-        <td th:text="${tra.getName()}"></td>
-        <td th:text="${tra.getArtistName()}"></td>
-        <td th:text="${tra.getAlbumTitle()}"></td>
-        <td th:text="${tra.getGenreName()}"></td>
+    <tr th:each="res:${result}">
+        <td th:text="${res.getName()}"></td>
+        <td th:text="${res.getArtistName()}"></td>
+        <td th:text="${res.getAlbumTitle()}"></td>
+        <td th:text="${res.getGenreName()}"></td>
     </tr>
     </tbody>
 </table>

@@ -2,13 +2,11 @@ package se.experis.com.musicapplication.controllers.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.experis.com.musicapplication.data_access.DatabaseAccessHandler;
-import se.experis.com.musicapplication.models.SearchTrack;
 
 @Controller
-public class CustomerViewController {
+public class ViewController {
     DatabaseAccessHandler databaseAccessHandler = new DatabaseAccessHandler();
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -19,11 +17,11 @@ public class CustomerViewController {
         return "home";
     }
 
-    @RequestMapping(value = "/viewTrack", method = RequestMethod.GET)
-    public String getSearchedTrack(Model model, @RequestParam (value = "trackName") String searchString){
-        model.addAttribute("track", databaseAccessHandler.searchForTrack(searchString));
+    @RequestMapping(value = "/searchResult", method = RequestMethod.GET)
+    public String getSearchedTrack(Model model, @RequestParam (value = "searchString") String searchString){
+        model.addAttribute("result", databaseAccessHandler.searchFor(searchString));
         model.addAttribute("resultFor", searchString);
-        return "viewTrack";
+        return "searchResult";
     }
 
 

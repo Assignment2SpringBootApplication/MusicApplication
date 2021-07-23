@@ -24,9 +24,9 @@
 </nav>
 
 
-<form th:action="@{/viewTrack}" method="get" style="margin-top: 150px">
+<form th:action="@{/searchResult}" method="get" style="margin-top: 150px">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search here..." id="inputName" th:name="trackName"/>
+        <input type="text" class="form-control" placeholder="Search here..." id="inputName" th:name="searchString"/>
     </div>
     <button type="submit" class="btn btn-success" style="background-color: #EC9129; position: relative; left: 0; right: 0; margin-left: 40%; border-color: black">Search</button>
 </form>

@@ -510,8 +510,8 @@ public class DatabaseAccessHandler {
         }
     }
 
-    public ArrayList<SearchTrack> searchForTrack(String searchString){
-        ArrayList<SearchTrack> tracks = new ArrayList<>();
+    public ArrayList<Search> searchFor(String searchString){
+        ArrayList<Search> result = new ArrayList<>();
         try {
             // Open Connection
             conn = DriverManager.getConnection(URL);
@@ -529,8 +529,8 @@ public class DatabaseAccessHandler {
 
             // Process Results
             while (resultSet.next()) {
-                tracks.add(
-                        new SearchTrack(
+                result.add(
+                        new Search(
                                 resultSet.getString("trackName"),
                                 resultSet.getString("artistName"),
                                 resultSet.getString("albumTitle"),
@@ -551,7 +551,7 @@ public class DatabaseAccessHandler {
                 System.out.println("Something went wrong while closing connection.");
                 System.out.println(ex.toString());
             }
-            return tracks;
+            return result;
         }
     }
 }

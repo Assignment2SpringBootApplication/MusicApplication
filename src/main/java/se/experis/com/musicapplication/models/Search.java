@@ -1,12 +1,12 @@
 package se.experis.com.musicapplication.models;
 
-public class SearchTrack {
+public class Search {
     private String name;
     private String artistName;
     private String albumTitle;
     private String genreName;
 
-    public SearchTrack(String name, String artistName, String albumTitle, String genreName) {
+    public Search(String name, String artistName, String albumTitle, String genreName) {
         this.name = name;
         this.artistName = artistName;
         this.albumTitle = albumTitle;
