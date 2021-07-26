@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "9f042b7f-5613-42f4-9637-88a4300a17d3",
+		"name": "MusicApplication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "GetCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSpecificCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/customerId/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"customerId",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSpecificCustomerByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/firstName/Mar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"firstName",
+								"Mar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomersWithLimitAndOffset",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerAmountPerCountry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/customersPerCountry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"customersPerCountry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetHighestSpender",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/highestSpenders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"highestSpenders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerMostPopularGenre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/mostPopularGenre/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"mostPopularGenre",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "AddCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": 71,\r\n        \"firstName\": \"Jaber\",\r\n        \"lastName\": \"AdamTestar\",\r\n        \"country\": \"Sweden\",\r\n        \"postalCode\": \"560001\",\r\n        \"phone\": \"+91 080 22289999\",\r\n        \"email\": \"test@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/addNewCustomer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"addNewCustomer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "UpdateCustomer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": 71,\r\n        \"firstName\": \"Olle\",\r\n        \"lastName\": \"NyttTest\",\r\n        \"country\": \"Sweden\",\r\n        \"postalCode\": \"560001\",\r\n        \"phone\": \"+91 080 22289999\",\r\n        \"email\": \"test@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/Customers/updateCustomer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Customers",
+								"updateCustomer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
